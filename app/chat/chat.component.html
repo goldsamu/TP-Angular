@@ -1,0 +1,9 @@
+<p>
+  chat works!
+</p>
+<div id="chat">
+  <app-chat-affichage [messages]="messages"></app-chat-affichage>
+</div>
+<div id="formulaire">
+  <app-chat-formulaire (nouveauMessage)="gererNouveauMessage($event)"></app-chat-formulaire>
+</div>
