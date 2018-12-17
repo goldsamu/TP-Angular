@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
-import { Message } from './models/message'
+import { Message } from './models/message';
+import { ChatService } from './services/chat.service';
 
 @Component({
 	selector: 'app-chat',
@@ -11,35 +11,18 @@ import { Message } from './models/message'
 export class ChatComponent implements OnInit {
 
 	public messages: Array<Message>;
-	constructor(private http: HttpClient) {
+	constructor(private chatService: ChatService) {
 		this.messages = new Array<Message>();
 	}
 
-	ngOnInit() {
-		this.http.get<any[]>('https://jsonplaceholder.typicode.com/posts').subscribe(
-			(results) => {
-				if (results != null) {
-					for (const result of results) {
-						result.date = new Date();
-						const message = new Message(result);
-						this.messages.push(message);
-					}
-					console.log(this.messages);
-				}
-			});
-		// Nous pouvons aussi pousser directement
-		// une tableau dans un autre:
-		const arr = new Array<Message>();
-		arr.push(...this.messages);
-		this.messages = arr;
+	public ngOnInit(): void {
+		this.chatService.getMessages().subscribe(
+			(messages) => this.messages = messages,
+			(error) => console.log(error)
+		);
 	}
-
 	public gererNouveauMessage(message: Message): void {
-		console.log('Nouveau message recu !');
-		this.messages.push(message);
-		const arr = new Array<Message>();
-		arr.push(...this.messages);
-		this.messages = arr;
+		this.messages = this.chatService.addMessage(message);
 	}
 
 }

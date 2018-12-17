@@ -22,7 +22,7 @@ export class ChatFormulaireComponent implements OnInit {
     message.auteur = 'toto';
     message.date = new Date();
     message.texte = this.texte;
-
+    
     this.nouveauMessage.emit(message);
   }
 

@@ -7,7 +7,6 @@ export class Message {
             this.texte = data.body;
             this.auteur = data.title;
             this.date = data.date ? data.date : new Date();
-            this.date = data.date;
         }
     }
 }
